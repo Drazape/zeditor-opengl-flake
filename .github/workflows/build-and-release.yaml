@@ -1,0 +1,65 @@
+name: Build and Release Zed OpenGL
+
+on:
+  push:
+    branches:
+      - latest
+    paths:
+      - 'flake.lock'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag'
+        required: false
+        default: 'latest'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Zed OpenGL
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v22
+
+      - name: Build Zed OpenGL package
+        run: |
+          # Build the package defined in the flake
+          nix build .#zeditor-opengl-src
+          
+          # Archive the result directory to a predictable, constant filename
+          tar -czvf zed-opengl-x86_64-linux.tar.gz -C result .
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: zed-opengl-binary
+          path: zed-opengl-x86_64-linux.tar.gz
+          retention-days: 1
+
+  release:
+    name: Publish Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: zed-opengl-binary
+
+      - name: Create or update release and upload asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Use dispatched tag input, or fallback to the branch name (e.g., 'latest')
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        run: |
+          # Ensure the release exists
+          gh release view "$TAG" || gh release create "$TAG" --title "Release $TAG" --notes "Automated OpenGL build of Zed editor"
+          
+          # Upload with --clobber to ensure the artifact name remains strictly constant
+          gh release upload "$TAG" zed-opengl-x86_64-linux.tar.gz --clobber
