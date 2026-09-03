@@ -3,7 +3,7 @@ name: Build and Release Zed OpenGL
 on:
   push:
     branches:
-      - latest
+      - alpha
     paths:
       - 'flake.lock'
   workflow_dispatch:
