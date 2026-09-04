@@ -20,11 +20,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788372231,
-        "narHash": "sha256-7aqErvrAEz/5OcPA5p3M+tVOqeYc4oJXkNIPXfCqxAw=",
+        "lastModified": 1788400875,
+        "narHash": "sha256-JIHQ6xNAN53cdo6zZ72LRcQ9lpvnABCnNE4hldJ5uZU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9387b3fcc0c23c86661636da63faabad4235a0a6",
+        "rev": "5545adfad2e98de106a5544ca7067e03010410bd",
         "type": "github"
       },
       "original": {
@@ -52,7 +52,21 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "zeditor-opengl-release": "zeditor-opengl-release"
+      }
+    },
+    "zeditor-opengl-release": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-3f44c4GhoBg3+Y8U/loT1Lg3dbrG24sADvTiyJBbltM=",
+        "type": "tarball",
+        "url": "https://github.com/Drazape/zeditor-opengl-flake/releases/latest/download/zed-opengl-x86_64-linux.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/Drazape/zeditor-opengl-flake/releases/latest/download/zed-opengl-x86_64-linux.tar.gz"
       }
     }
   },
