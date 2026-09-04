@@ -34,8 +34,8 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
         with:
-          name: zed-opengl-binary
           path: zed-opengl-x86_64-linux.tar.gz
+          archive: false
           retention-days: 1
 
   release:
@@ -44,23 +44,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
-          name: zed-opengl-binary
+          path: ./zed-opengl-x86_86-linux.tar.gz
 
       - name: Create release and upload asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.event.inputs.tag || format('zed-opengl-{0}', github.sha) }}
         run: |
-          # Explicitly define the repository so gh doesn't look for a local .git directory
           REPO="${{ github.repository }}"
           
-          # Create a new, unique release for this specific commit
+          # Create the release
           gh release create "$TAG" \
             --repo "$REPO" \
             --title "Auto-build: $TAG" \
             --notes "Automated OpenGL build of Zed editor for commit ${{ github.sha }}"
           
-          # Upload the artifact
+          # Upload the exact tar.gz file. 
+          # Because we used 'path: .', the file is now in the current directory.
           gh release upload "$TAG" zed-opengl-x86_64-linux.tar.gz --repo "$REPO"
