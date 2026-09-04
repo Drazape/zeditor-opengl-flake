@@ -51,13 +51,16 @@ jobs:
       - name: Create release and upload asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Use manual input if provided, otherwise generate a unique tag based on the commit SHA
           TAG: ${{ github.event.inputs.tag || format('zed-opengl-{0}', github.sha) }}
         run: |
+          # Explicitly define the repository so gh doesn't look for a local .git directory
+          REPO="${{ github.repository }}"
+          
           # Create a new, unique release for this specific commit
           gh release create "$TAG" \
+            --repo "$REPO" \
             --title "Auto-build: $TAG" \
             --notes "Automated OpenGL build of Zed editor for commit ${{ github.sha }}"
           
-          # Upload the artifact. No --clobber needed since the tag is unique.
-          gh release upload "$TAG" zed-opengl-x86_64-linux.tar.gz
+          # Upload the artifact
+          gh release upload "$TAG" zed-opengl-x86_64-linux.tar.gz --repo "$REPO"
