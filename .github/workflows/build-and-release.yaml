@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - alpha
-    paths:
-      - 'flake.lock'
   workflow_dispatch:
     inputs:
       tag:
