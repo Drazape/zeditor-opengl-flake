@@ -20,6 +20,24 @@
 						name = "zeditor-opengl";
 						src = inputs.zeditor-opengl-release;
 
+					  buildInputs = with pkgs; [
+					    libgit2
+					    sqlite
+					    zlib
+					    zstd
+					    fontconfig
+					    openssl
+					    glib
+					    alsa-lib
+					    libxkbcommon
+					    wayland
+					    libxcb
+					    # required by livekit:
+					    libGL
+					    libx11
+					    libxext
+					  ];
+
 						installPhase = ''
 							${lib.getExe' pkgs.coreutils "cp"} --recursive -- $src/ $out/
 						'';
