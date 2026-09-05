@@ -44,7 +44,7 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v8
         with:
-          path: ./zed-opengl-x86_86-linux.tar.gz
+          path: .
 
       - name: Create release and upload asset
         env:
