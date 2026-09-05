@@ -54,9 +54,6 @@
             env = (previousAttrs.env or { }) // {
               RUSTFLAGS = "--cfg gles";
             };
-            
-            # explicitly ensure libGL is available during the CI build
-            buildInputs = (previousAttrs.buildInputs or [ ]) ++ [ pkgs.libGL ];
           });
         };
 			};
