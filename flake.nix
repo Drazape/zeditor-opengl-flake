@@ -31,7 +31,7 @@
 							platforms = lib.platforms.linux;
 						};
 					};
-				  zeditor-opengl-src = pkgs.zed-editor.overrideAttrs (finalAttrs: previousAttrs: {
+				  zeditor-opengl-src = pkgs.zed-editor-fhs.overrideAttrs (finalAttrs: previousAttrs: {
             # inject the GLES configuration flag required by Zed's gpui crate
             env = (previousAttrs.env or { }) // {
               RUSTFLAGS = "--cfg gles";
