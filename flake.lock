@@ -60,7 +60,7 @@
       "flake": false,
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-DZ9LYwDb3wBpmoegjcJmt6bYcjhH6Gnu8rYkl5yWXF4=",
+        "narHash": "sha256-xb2AqQ7kanoVrVIs+8nMyuMUIQLh1593bo4Iulv8d/Y=",
         "type": "tarball",
         "url": "https://github.com/Drazape/zeditor-opengl-flake/releases/latest/download/zed-opengl-x86_64-linux.tar.gz"
       },
